@@ -17,10 +17,15 @@
 	<div class="example-wrapper">
 		<h1>Fiche des catégories</h1>
 		<p>
-			{{categorie.name|upper }}
+			{{category.name|upper }}
 		</p>
 
-		<form action="" method="post">
+		<form action="{{ path('app_category_delete', {'id':category.id}) }}" 
+			method="post"
+			onsubmit="return confirm('êtes-vous sûr de vouloir supprimer ?')">
+
+			<input type="hidden" name="_method" value="DELETE">
+
 			<button>Supprimer</button>
 		</form>
 	<div>

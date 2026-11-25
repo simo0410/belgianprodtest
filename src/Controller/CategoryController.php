@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Builder\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -28,7 +29,7 @@ final class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/category/{id}', name: 'app_category_show')]
+    #[Route('/category/{id}', name: 'app_category_show', methods:['GET', 'HEAD'])]
     public function show(category $category): Response
     {
 
@@ -43,7 +44,7 @@ final class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/category/delete/{id}', name: 'app_category_delete')]
+    #[Route('/category/delete/{id}', name: 'app_category_delete', methods:['DELETE'])]
     public function delete(EntityManagerInterface $em, category $category): Response
     {
         //Supprimer
