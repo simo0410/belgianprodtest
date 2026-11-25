@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Form\CategoryType;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Builder\Method;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -45,16 +46,34 @@ final class CategoryController extends AbstractController
     }
 
 
-    #[Route('/category/{id}', name: 'app_category_edit', methods:['PUT', 'PATCH'])]
+    #[Route('/category/{id}', name: 'app_category_edit', methods:['POST', 'PUT', 'PATCH'])]
     public function edit(EntityManagerInterface $em, category $category): Response
     {
+
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+
         //Modification
-        dd('ok');
+       // dd('ok');
 
-        return $this->render('category/show.html.twig', [
+            $category = $form->getData();
+            $em->flush();
 
+            return $this->render('category/show.html.twig', [
+                'category'=>$category,
+            ]);
+
+
+       $form = $this->createForm(CategoryType::class, $category);
+       $form->handleRequest($request);
+
+       
+        return $this->render('category/edit.html.twig', [
+            'category'=>$category,
         
-            'category'=> $category,
+            'form'=> $form,
         ]);
     }
 
@@ -72,6 +91,5 @@ final class CategoryController extends AbstractController
             'category'=> $category,
         ]);
     }
-
-   
+ 
 }
