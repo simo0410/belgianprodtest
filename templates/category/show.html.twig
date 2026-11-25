@@ -20,14 +20,20 @@
 			{{category.name|upper }}
 		</p>
 
-		<form action="{{ path('app_category_delete', {'id':category.id}) }}" 
-			method="post"
-			onsubmit="return confirm('êtes-vous sûr de vouloir supprimer ?')">
+		<form action="{{ path('app_category_edit', {'id':category.id}) }}" method="post">
+			<input type="hidden" name="_method" value="PUT">
+			<button>Modifier</button>
+		</form>
+
+		<form action="{{ path('app_category_delete', {'id':category.id}) }}"
+		 method="post" 
+		 onsubmit="return confirm('êtes-vous sûr de vouloir supprimer ?')">
 
 			<input type="hidden" name="_method" value="DELETE">
 
 			<button>Supprimer</button>
 		</form>
-	<div>
+
+		<div>
 
 {% endblock %}

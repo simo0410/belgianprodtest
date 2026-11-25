@@ -44,13 +44,34 @@ final class CategoryController extends AbstractController
         ]);
     }
 
+
+    #[Route('/category/{id}', name: 'app_category_edit', methods:['PUT', 'PATCH'])]
+    public function edit(EntityManagerInterface $em, category $category): Response
+    {
+        //Modification
+        dd('ok');
+
+        return $this->render('category/show.html.twig', [
+
+        
+            'category'=> $category,
+        ]);
+    }
+
+
     #[Route('/category/delete/{id}', name: 'app_category_delete', methods:['DELETE'])]
     public function delete(EntityManagerInterface $em, category $category): Response
     {
-        //Supprimer
+        //Supprimer la catégorie
         $em->remove($category);
         $em->flush();
 
-        return $this->redirectToRoute('app_category');
+        return $this->render('category/show.html.twig', [
+
+        
+            'category'=> $category,
+        ]);
     }
+
+   
 }
